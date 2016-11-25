@@ -4,7 +4,8 @@
   "description": "API Document Generator for Dojo 2",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "doc": "node ./_build/src/index.js && mustache ./input/docs.json ./templates/myTemplate.mustache > ./output/output.html"
   },
   "repository": {
     "type": "git",
@@ -32,9 +33,11 @@
     "dojo-stores": "^2.0.0-alpha.4",
     "dojo-widgets": "^2.0.0-alpha.13",
     "glob": "^7.1.1",
+    "handlebars": "^4.0.6",
     "immutable": "^3.8.1",
     "maquette": "^2.4.1",
-    "marked": "^0.3.6"
+    "marked": "^0.3.6",
+    "pkg-dir": "^1.0.0"
   },
   "devDependencies": {
     "@types/chai": "^3.4.34",

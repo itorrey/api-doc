@@ -132,7 +132,7 @@ function convert(files: string[], program: Program): { results: any, diagnostics
 		}
 	}
 
-	const prefixLength = '/Users/kitsonk/github/compose/src/'.length;
+	const prefixLength = '/Users/andy/gh/dojo/core/src/'.length;
 
 	program.getSourceFiles().forEach((sourceFile) => {
 		if (files.indexOf(sourceFile.fileName) > -1) {

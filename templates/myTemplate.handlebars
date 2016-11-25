@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dojo 2 API documentation</title>
+  <link href="../styles/main.css">
+</head>
+<body>
+  {{#each results}}
+    {{#if this.length}}<div class="file">
+    <div class="filename">{{@key}}</div>
+    {{#each this}}
+      <div class="file-details">
+        <div class="member-header"><span class="node-type">{{this.nodeType}}:</span> <span class="name">{{this.name}}</span></div>
+        <div class="member-documentation">
+          {{#if this.documentation}}
+            {{{this.documentation}}}
+          {{else}}
+            <p>-- awaiting documentation --</p>
+          {{/if}}
+        </div>
+
+        {{#switch this.nodeType}}
+          {{#case "interface"}}
+            <div class="interface-caption">Interface details</div>
+            {{#each this.members}}
+              <div class="interface-header"><span class="name">{{this.name}}:</span> <span class="type">{{{this.type}}}</span>
+                {{#if this.documentation}}
+                    <span class="documentation">- {{{this.documentation}}}</span>
+                {{/if}}
+              </div>
+            {{/each}}
+          {{/case}}
+        {{/switch}}
+      </div>
+    {{/each}}
+    </div>
+    {{/if}}
+  {{/each}}
+</body>
+</html>
+

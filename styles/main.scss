@@ -1,0 +1,48 @@
+$monoFont : Consolas, monaco, monospace;
+$font : 'Open Sans', sans-serif;
+
+body {
+  font: 100% $font;
+}
+
+.file{
+  border: 1px solid lightgrey;
+  padding: 1em;
+  .filename {
+    font-weight: bold;
+    font: 100% $monoFont;
+  }
+  .file-details {
+    margin-top: 1em;
+    margin-left: 2em;
+    .member-header {
+      border-top: 1px dashed lightgrey;
+      padding-top: 0.5em;
+      .name {
+        font: 85% $monoFont;
+      }
+    }
+
+    .member-documentation {
+    }
+    .interface-caption {
+      margin-bottom: 0.5em;
+    }
+    .interface-header {
+      font: 85% $monoFont;
+      margin-left: 1em;
+      .type {
+        color: blue;
+      }
+    }
+
+  }
+}
+
+code {
+  font: 75% $monoFont;
+  &:hover {
+    color: lightblue;
+    cursor: pointer;
+  }
+}

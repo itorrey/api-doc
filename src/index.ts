@@ -8,13 +8,34 @@ import {
 } from 'typescript';
 import convert from './generator/convert';
 import * as glob from 'glob';
+import { join } from 'path';
+import * as fs from 'fs';
+import * as pkgDir from 'pkg-dir';
+const Handlebars = require('handlebars');
+import * as handlebarsHelpers from '../templates/helpers';
 
-glob('../compose/src/**/*.ts', { realpath: true } , (err, files) => {
+glob(join(__dirname, '../../../core/src/**/*.ts'), { realpath: true } , (err, files) => {
 	if (err) {
 		throw err;
 	}
 
-	console.log(files);
+	// console.log(files);
+
+	function clean(filename: string) {
+		try {
+			fs.unlinkSync(filename);
+		} catch (err) {
+			// noop
+		}
+	}
+
+	function setupHandlebars(): any{
+		const templateFile = fs.readFileSync(templateFileName);
+		Handlebars.registerHelper(handlebarsHelpers.switch);
+		Handlebars.registerHelper(handlebarsHelpers.case);
+		Handlebars.registerHelper(handlebarsHelpers.default);
+		return Handlebars.compile(templateFile.toString());
+	}
 
 	const compilerOptions: CompilerOptions = {
 		lib: [
@@ -30,11 +51,21 @@ glob('../compose/src/**/*.ts', { realpath: true } , (err, files) => {
 		project: '../compose',
 		target: ScriptTarget.ES5
 	};
+
+	const projectDir = pkgDir.sync(__dirname);
+	const templateFileName = join(projectDir, './templates/myTemplate.handlebars');
+	const outputHTMLFileName = join(projectDir, './output/output.html');
+
+	clean(outputHTMLFileName);
+
 	const host = createCompilerHost(compilerOptions);
 	const program = createProgram(files, compilerOptions, host);
 
 	const results = convert(files, program);
+	// console.log(JSON.stringify(results.results, undefined, '  '));
 
-	console.log(JSON.stringify(results.results, undefined, '  '));
-	// console.log(results.diagnostics);
+	const template = setupHandlebars();
+	const html = template({'results' : results.results});
+	fs.writeFileSync(outputHTMLFileName, html);
+
 });
