@@ -1,6 +1,11 @@
 $monoFont : Consolas, monaco, monospace;
 $font : 'Open Sans', sans-serif;
 
+$linkCol: lightBlue;
+$typesCol: purple;
+$typeCol: blue;
+$borderCol: lightGrey;
+
 body {
   font: 100% $font;
 }
@@ -32,7 +37,22 @@ body {
       font: 85% $monoFont;
       margin-left: 1em;
       .type {
-        color: blue;
+        color: $typeCol;
+      }
+    }
+    .types {
+      font: 85% $monoFont;
+      margin-left: 1em;
+      .name {
+      }
+    }
+    .types :first-of-type {
+      &::before {
+        display: inline-block;
+        padding-top: 1em;
+        color: $typesCol;
+        content: 'Type:';
+        padding-right: 0.5em;
       }
     }
 
@@ -40,9 +60,10 @@ body {
 }
 
 code {
-  font: 75% $monoFont;
+  font: 85% $monoFont;
   &:hover {
-    color: lightblue;
+    color: $linkCol;
+    text-decoration: underline;
     cursor: pointer;
   }
 }

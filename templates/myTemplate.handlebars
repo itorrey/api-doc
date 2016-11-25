@@ -24,10 +24,26 @@
           {{#case "interface"}}
             <div class="interface-caption">Interface details</div>
             {{#each this.members}}
-              <div class="interface-header"><span class="name">{{this.name}}:</span> <span class="type">{{{this.type}}}</span>
-                {{#if this.documentation}}
-                    <span class="documentation">- {{{this.documentation}}}</span>
-                {{/if}}
+              {{#switch this.nodeType}}
+                {{#case "index"}}
+                    <div class="interface-header">index (
+                      {{#each this.parameters}}
+                        <span class="name">{{this.name}}:</span> <span class="type">{{this.type}}</span>
+                      {{/each}}
+                      ): <span class="type">{{this.returnType}}</span></div>
+                {{/case}}
+                {{#case "member"}}
+                  <div class="interface-header"><span class="name">{{this.name}}:</span> <span class="type">{{{this.type}}}</span>
+                    {{#if this.documentation}}
+                      <span class="documentation">- {{{this.documentation}}}</span>
+                    {{/if}}
+                  </div>
+                {{/case}}
+              {{/switch}}
+            {{/each}}
+            {{#each this.typeParameters}}
+              <div class="types">
+                <span class="name">{{this.name}}</span> (<span class="type">{{this.documentation}}</span>)
               </div>
             {{/each}}
           {{/case}}
