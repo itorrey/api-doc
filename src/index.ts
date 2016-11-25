@@ -14,6 +14,8 @@ import * as pkgDir from 'pkg-dir';
 const Handlebars = require('handlebars');
 import * as handlebarsHelpers from '../templates/helpers';
 
+const projectDir = pkgDir.sync(__dirname);
+
 glob(join(__dirname, '../../../core/src/**/*.ts'), { realpath: true } , (err, files) => {
 	if (err) {
 		throw err;
@@ -31,10 +33,18 @@ glob(join(__dirname, '../../../core/src/**/*.ts'), { realpath: true } , (err, fi
 
 	function setupHandlebars(): any{
 		const templateFile = fs.readFileSync(templateFileName);
+
+		Handlebars.registerPartial('sidebar', compilePartial('sidebar'));
+
 		Handlebars.registerHelper(handlebarsHelpers.switch);
 		Handlebars.registerHelper(handlebarsHelpers.case);
 		Handlebars.registerHelper(handlebarsHelpers.default);
 		return Handlebars.compile(templateFile.toString());
+
+		function compilePartial(name: string): any{
+			const partialFile = fs.readFileSync(join(projectDir, '/templates/partials/', `${name}.handlebars`));
+			return Handlebars.compile(partialFile.toString());
+		}
 	}
 
 	const compilerOptions: CompilerOptions = {
@@ -52,7 +62,7 @@ glob(join(__dirname, '../../../core/src/**/*.ts'), { realpath: true } , (err, fi
 		target: ScriptTarget.ES5
 	};
 
-	const projectDir = pkgDir.sync(__dirname);
+
 	const templateFileName = join(projectDir, './templates/myTemplate.handlebars');
 	const outputHTMLFileName = join(projectDir, './output/output.html');
 

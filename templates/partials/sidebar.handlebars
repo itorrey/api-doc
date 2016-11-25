@@ -1,0 +1,14 @@
+<div class="sidebar">
+  <div class="sidebar-header">Files in {{package}}</div>
+  <div class="sidebar-main">
+    {{#each results}}
+      {{#if this.length}}
+        <div class="file">
+          <div class="filename">{{@key}}</div>
+        </div>
+      {{/if}}
+    {{/each}}
+  </div>
+</div>
+
+
